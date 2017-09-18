@@ -23,3 +23,28 @@ For Solaris, you can also make sure core files are enabled with the coreadm comm
 Check ulimit -a to see whether your environment allows core files to be produced.
 ulimit -c (This is the size limit of the core file. Fix it with ulimit -c unlimited).
 Kernel limitation (hard limit for ulimit -c).
+
+
+Heap Dump 
+Automatically Generating a Heap Dump when Confluence Hits OutOfMemory Error
+Typically, we would like to analyze the heap dump produced when Confluence died from an OutOfMemory Error. 
+For this, you can add additional JVM parameters like below:
+-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=<path to this heap dump file>
+
+Manually Generating a Heap Dump when Confluence Stops Responding
+It is also possible to get a heap dump manually using a JDK bundled tool called jmap, although we recommend that you use the automatic method above for best result.
+For Linux/Solaris-based Operating Systems:
+Please execute the following command on Linux OS:
+$JAVA_HOME/bin/jmap -dump:format=b,file=heap.bin <pid>
+
+
+
+Generating thread dumps on Linux
+To generate a thread dump on Linux (or Solaris or other Unixes):
+Identify the java process that Confluence is running in.: This can be achieved by running a command similar to:
+ps -ef | grep java.
+Use the process ID from the above to generate the thread dumps:
+kill -3 <pid>
+This won't kill your server (so long as you included the "-3" option with no space in between).
+
+
