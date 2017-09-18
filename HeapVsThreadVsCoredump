@@ -1,0 +1,25 @@
+
+What is the difference between heap dump, thread dump and a core dump? 
+
+
+Heap dump - Collection of objects that are in memory (JVM)
+Thread dump - Shows what each thread in a process is doing at a given point in time along with the stack trace.
+Core dump - O/S level dump file which has O/S level info in addition to the heap dump.
+
+Heap dump - is useful to analyse OOM situations.
+Thread dump - To troubleshoot slow running of your application.
+Core dump - When your JVM has crashed abruptly. To find details about native calls and so on. 
+
+Core dump will be generated automatically if a program crashed due to segmentation fault or some other reason. But core dump will not be generated if an application halt and been terminate by control+c or conventional way of kill or pkill.
+
+In order to force a core dump generation you could run kill -6 <PID>
+
+You should also make sure that you have enabled it and have provided enough space and permissions for it to get generated.
+
+For Linux, the coredump is turned off by default on all systems. For RedHat Advanced Server 2.1, it should be under /etc/security. There should be a self-explanatory file called limits.conf and look for the word "core". If set to "0", then coredump is disabled.
+
+For Solaris, you can also make sure core files are enabled with the coreadm command.
+
+Check ulimit -a to see whether your environment allows core files to be produced.
+ulimit -c (This is the size limit of the core file. Fix it with ulimit -c unlimited).
+Kernel limitation (hard limit for ulimit -c).
